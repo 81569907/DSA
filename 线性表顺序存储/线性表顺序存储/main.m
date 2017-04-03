@@ -12,63 +12,185 @@
 #include <math.h>
 #include  <time.h>
 
-#define OK 1
-#define ERROR 0
-#define TRUE 1
-#define FALSE 0
+/*数据类型和常量定义*/
+#define TRUE           1
+#define FALSE          0
+#define OK             1
+#define ERROR          0
+#define SQOVERFLOW      -2
 
-typedef int Status;
+
+typedef int  Status;
 typedef int ElemType;
 
+/*数据结构声明*/
+/*线性表的动态分配顺序存储结构*/
+#define LIST_INIT_SIZE 20   /* 线性存储空间的初始分配量 */
+#define LISTINCREMENT  10   /* 线性存储空间的分配增量 */
 
-#define MAXSIZE 20 /*线性表的大小*/
+typedef struct {
+    ElemType *elem;        /* 存储空间基址 */
+    int length;            /* 当前长度 */
+    int listsize;          /* 当前分配的存储容量(以sizeof(ElemType)为单位) */
+} SqList;
 
-typedef struct{
-    ElemType data[MAXSIZE];
-    int length;
-}SqList;
 
 
 /**
- 打印某个元素
+ 构造一个空的线性表
 
- @param c <#c description#>
+ @param L <#L description#>
 
  @return <#return value description#>
  */
-Status visit(ElemType c)
-{
-    printf("%d ",c);
+Status  InitSqList(SqList * L){
+    L->elem = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(ElemType));
+    if (!L->elem) {
+        exit(0);
+    }
+    L->length = 0;//空表长度为0
+    L->listsize = LIST_INIT_SIZE;//初始存储容量
     return OK;
 }
 
+
 /**
- 初始化线性表
+ 在线性表中插入元素
+ 在顺序线性表L中第i个位置插入新的元素e, i的合法值为 0<= i <= ListLength_Sq(L)
 
  @param L <#L description#>
+ @param i <#i description#>
+ @param e <#e description#>
 
  @return <#return value description#>
  */
-Status InitList(SqList * L){
-    L->length = 0;
-    return 0;
-}
-
-
-/**
- 判断线性表是否为空
-
- @param L <#L description#>
-
- @return <#return value description#>
- */
-Status ListEmpty(SqList *L){
-    if(L->length == 0){
-        return TRUE;
-    }else{
-        return FALSE;
+Status SqListInsert(SqList *L, int i, ElemType e) {
+    ElemType * newbase = NULL;
+    ElemType * p = NULL;
+    ElemType * q = NULL;
+    
+    if (i < 0 || i > L->length) {
+        return ERROR;
     }
+    if (L->length >= L->listsize) {//重新分配大小为LISTINCREMENT空间
+        newbase = (ElemType *)realloc(L->elem, (L->listsize + LISTINCREMENT) * sizeof(ElemType));
+        if (!newbase) {
+            exit(SQOVERFLOW);
+        }
+        L->elem = newbase;
+        L->listsize += LISTINCREMENT;
+    }
+    q = &(L->elem[i]);//取出第i-1个位置元素地址，临时保存
+    for (p = &(L->elem[L->length - 1]); p >= q; --p) {//被插入元素全部后移一位
+        *(p + 1) = *p;
+    }
+    *q = e;
+    ++L->length;
+    return OK;
 }
+
+
+
+/**
+ 删除线性表中的元素
+ 在顺序线性表L中删除第i个元素, 并用e返回其值, i的合法值为 0<= i < ListLength_Sq(L)
+
+ @param L <#L description#>
+ @param i <#i description#>
+ @param e <#e description#>
+
+ @return <#return value description#>
+ */
+Status SqListDelete(SqList *L, int i, ElemType *e) {
+    ElemType * p = NULL;
+    ElemType * q = NULL;
+    
+    if (i < 0 || i > L->length) {
+        return ERROR;
+    }
+    
+    p = &(L->elem[i]);
+    *e = *p;
+    q = &(L->elem[L->length - 1]);//表尾元素位置
+    for (++p; p <= q; ++p) {
+        *(p - 1) = *p;//被删除元素之后的元素左移
+    }
+    
+    --L->length;
+    return OK;
+}
+
+
+
+/**
+ 遍历线性表
+
+ @param L     <#L description#>
+ @param Visit <#Visit description#>
+
+ @return <#return value description#>
+ */
+Status SqListTraverse(SqList *L, Status (*Visit)(ElemType)) {
+    
+    ElemType *p = NULL;
+    ElemType *q = NULL;
+    if (L->length == 0) return ERROR;
+    p = &(L->elem[0]);
+    q = L->elem + L->length - 1;    //表尾元素位置
+    for (; p <= q; ++p) Visit(*p);
+    return OK;
+}
+
+
+/**
+ 访问线性表中的元素
+
+ @param e <#e description#>
+
+ @return <#return value description#>
+ */
+Status Visit(ElemType e)
+{
+    printf("%d ", e);
+    return OK;
+}
+
+
+
+/**
+ 获取第i个位置上的元素
+
+ @param L <#L description#>
+ @param i <#i description#>
+ @param e <#e description#>
+
+ @return <#return value description#>
+ */
+Status SqListGetElem(SqList *L, int i, ElemType *e){
+    //1<=i<=ListLength(L)。
+    //操作结果：用e返回L中第i个数据元素的值。
+    
+    if(i < 0  ||  i>L->length) return ERROR;
+    e = &L->elem[i];
+    return OK;
+}
+
+
+/**
+ 销毁线性表
+
+ @param L <#L description#>
+
+ @return <#return value description#>
+ */
+Status DestroySqList(SqList *L){
+    //操作结果：销毁线性表L。
+    
+    free(L);
+
+    return OK;
+}
+
 
 
 /**
@@ -78,239 +200,71 @@ Status ListEmpty(SqList *L){
 
  @return <#return value description#>
  */
-Status ClearList(SqList *L)
-{ 
-    L->length=0;
+Status ClearSqList(SqList *L) {
+    //操作结果：将L重置为空表。
+    L->length = 0;
     return OK;
 }
 
 
+
 /**
- 获取线性表的长度
+ 获取长度
 
  @param L <#L description#>
 
  @return <#return value description#>
  */
-int ListLength(SqList* L)
-{
+int SqListLength(SqList *L){
+    //操作结果：返回L中数据元素的个数。
+    
     return L->length;
 }
 
 
-/**
- 根据位置，获取线性表的元素
-
- @param L L description
- @param i <#i description#>
- @param e <#e description#>
-
- @return <#return value description#>
- */
-Status GetElem(SqList *L,int i,ElemType *e)
-{
-    if(L->length==0 || i<1 || i>L->length)
-        return ERROR;
-    *e=L->data[i-1];
-    
-    return OK;
-}
-
-
-/**
- 定位元素
-
- @param L <#L description#>
- @param e <#e description#>
-
- @return <#return value description#>
- */
-int LocateElem(SqList *L,ElemType e)
-{
-    int i;
-    if (L->length==0)
-        return 0;
-    for(i=0;i<L->length;i++)
-    {
-        if (L->data[i]==e)
-            break;
-    }
-    if(i>=L->length)
-        return 0;
-    
-    return i+1;
-}
-
-
-/**
- 插入元素
-
- @param L <#L description#>
- @param i <#i description#>
- @param e <#e description#>
-
- @return <#return value description#>
- */
-Status ListInsert(SqList *L,int i,ElemType e)
-{ 
-    int k;
-    if (L->length==MAXSIZE)  
-        return ERROR;
-    if (i<1 || i>L->length+1)
-        return ERROR;
-    
-    if (i<=L->length)       
-    {
-        for(k=L->length-1;k>=i-1;k--)  
-            L->data[k+1]=L->data[k];
-    }
-    L->data[i-1]=e;         
-    L->length++;
-    
-    return OK;
-}
-
-
-/**
- 删除元素
-
- @param L <#L description#>
- @param i <#i description#>
- @param e <#e description#>
-
- @return <#return value description#>
- */
-Status ListDelete(SqList *L,int i,ElemType *e) 
-{ 
-    int k;
-    if (L->length==0)               /* œﬂ–‘±ÌŒ™ø’ */
-        return ERROR;
-    if (i<1 || i>L->length)         /* …æ≥˝Œª÷√≤ª’˝»∑ */
-        return ERROR;
-    *e=L->data[i-1];
-    if (i<L->length)                /* »Áπ˚…æ≥˝≤ª «◊Ó∫ÛŒª÷√ */
-    {
-        for(k=i;k<L->length;k++)/* Ω´…æ≥˝Œª÷√∫ÛºÃ‘™Àÿ«∞“∆ */
-            L->data[k-1]=L->data[k];
-    }
-    L->length--;
-    return OK;
-}
-
-
-/**
- 遍历线性表
-
- @param L <#L description#>
-
- @return <#return value description#>
- */
-Status ListTraverse(SqList* L)
-{
-    int i;
-    for(i=0;i<L->length;i++)
-        visit(L->data[i]);
-    printf("\n");
-    return OK;
-}
-
-
-/**
- 合并两个线性表
-
- @param La <#La description#>
- @param Lb <#Lb description#>
- */
-void unionL(SqList *La,SqList *Lb)
-{
-    int La_len,Lb_len,i;
-    ElemType e;
-    La_len=ListLength(La);
-    Lb_len=ListLength(Lb);
-    for (i=1;i<=Lb_len;i++)
-    {
-        GetElem(Lb,i,&e);
-        if (!LocateElem(La,e))
-            ListInsert(La,++La_len,e);
-    }
-}
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        SqList *L;
+        SqList L;
+        InitSqList(&L);
         ElemType e;
-        Status i;
-        int j,k;
-        i=InitList(L);
-        printf("≥ı ºªØL∫Û£∫L.length=%d\n",L->length);
-        for(j=1;j<=5;j++)
-            i=ListInsert(L,1,j);
-        printf("‘⁄Lµƒ±ÌÕ∑“¿¥Œ≤Â»Î1°´5∫Û£∫L.data=");
-        ListTraverse(L); 
         
-        printf("L.length=%d \n",L->length);
-        i=ListEmpty(L);
-        printf("L «∑Òø’£∫i=%d(1: « 0:∑Ò)\n",i);
+        //遍历空表
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
         
-        i=ClearList(L);
-        printf("«Âø’L∫Û£∫L.length=%d\n",L->length);
-        i=ListEmpty(L);
-        printf("L «∑Òø’£∫i=%d(1: « 0:∑Ò)\n",i);
+        //插入元素
+        if (OK == SqListInsert(&L, 0, 10)) printf("insert succeed!\n");
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+        if (OK == SqListInsert(&L, 0, 20)) printf("insert succeed!\n");
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+        if (OK == SqListInsert(&L, 1, 30)) printf("insert succeed!\n");
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+        if (OK == SqListInsert(&L, 2, 40)) printf("insert succeed!\n");
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+        if (OK == SqListInsert(&L, 1, 50)) printf("insert succeed!\n");
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
         
-        for(j=1;j<=10;j++)
-            ListInsert(L,j,j);
-        printf("‘⁄Lµƒ±ÌŒ≤“¿¥Œ≤Â»Î1°´10∫Û£∫L.data=");
-        ListTraverse(L); 
-        
-        printf("L.length=%d \n",L->length);
-        
-        ListInsert(L,1,0);
-        printf("‘⁄Lµƒ±ÌÕ∑≤Â»Î0∫Û£∫L.data=");
-        ListTraverse(L); 
-        printf("L.length=%d \n",L->length);
-        
-        GetElem(L,5,&e);
-        printf("µ⁄5∏ˆ‘™Àÿµƒ÷µŒ™£∫%d\n",e);
-        for(j=3;j<=4;j++)
-        {
-            k=LocateElem(L,j);
-            if(k)
-                printf("µ⁄%d∏ˆ‘™Àÿµƒ÷µŒ™%d\n",k,j);
-            else
-                printf("√ª”–÷µŒ™%dµƒ‘™Àÿ\n",j);
-        }
+        //遍历非空表
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
         
         
-        k=ListLength(L); /* kŒ™±Ì≥§ */
-        for(j=k+1;j>=k;j--)
-        {
-            i=ListDelete(L,j,&e); /* …æ≥˝µ⁄j∏ˆ ˝æ› */
-            if(i==ERROR)
-                printf("…æ≥˝µ⁄%d∏ˆ ˝æ› ß∞‹\n",j);
-            else
-                printf("…æ≥˝µ⁄%d∏ˆµƒ‘™Àÿ÷µŒ™£∫%d\n",j,e);
-        }
-        printf("“¿¥Œ ‰≥ˆLµƒ‘™Àÿ£∫");
-        ListTraverse(L); 
-        
-        j=5;
-        ListDelete(L,j,&e); /* …æ≥˝µ⁄5∏ˆ ˝æ› */
-        printf("…æ≥˝µ⁄%d∏ˆµƒ‘™Àÿ÷µŒ™£∫%d\n",j,e);
-        
-        printf("“¿¥Œ ‰≥ˆLµƒ‘™Àÿ£∫");
-        ListTraverse(L); 
-        
-        //ππ‘Ï“ª∏ˆ”–10∏ˆ ˝µƒLb
-        SqList *Lb;
-        i=InitList(Lb);
-        for(j=6;j<=15;j++)
-            i=ListInsert(Lb,1,j);
-        
-        unionL(L,Lb);
-        
-        printf("“¿¥Œ ‰≥ˆ∫œ≤¢¡ÀLbµƒLµƒ‘™Àÿ£∫");
-        ListTraverse(L); 
+        //删除元素
+        if (OK == SqListDelete(&L, 1, &e)) printf("delete %d succeed!\n", e);
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+        if (OK == SqListDelete(&L, 3, &e)) printf("delete %d succeed!\n", e);
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+        if (OK == SqListDelete(&L, 2, &e)) printf("delete %d succeed!\n", e);
+        if (OK == SqListTraverse(&L, Visit)) printf("visit succeed!\n");
+
+
         
     }
     return 0;
