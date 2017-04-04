@@ -25,8 +25,8 @@ typedef int ElemType;
 
 /*数据结构声明*/
 /*线性表的动态分配顺序存储结构*/
-#define LIST_INIT_SIZE 20   /* 线性存储空间的初始分配量 */
-#define LISTINCREMENT  10   /* 线性存储空间的分配增量 */
+#define LIST_INIT_SIZE 2   /* 线性存储空间的初始分配量 */
+#define LISTINCREMENT  1   /* 线性存储空间的分配增量 */
 
 typedef struct {
     ElemType *elem;        /* 存储空间基址 */
