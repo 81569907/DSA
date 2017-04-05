@@ -2,6 +2,6 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "self:&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;.xcodeproj">
+      location = "self:Simple Linked List.xcodeproj">
    </FileRef>
 </Workspace>

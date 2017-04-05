@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "4C3921EF1E93E55A00558850"
-               BuildableName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-               BlueprintName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-               ReferencedContainer = "container:&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;.xcodeproj">
+               BlueprintIdentifier = "B89D20141E94BECB002DD982"
+               BuildableName = "Simple Linked List"
+               BlueprintName = "Simple Linked List"
+               ReferencedContainer = "container:Simple Linked List.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -32,10 +32,10 @@
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C3921EF1E93E55A00558850"
-            BuildableName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-            BlueprintName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-            ReferencedContainer = "container:&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;.xcodeproj">
+            BlueprintIdentifier = "B89D20141E94BECB002DD982"
+            BuildableName = "Simple Linked List"
+            BlueprintName = "Simple Linked List"
+            ReferencedContainer = "container:Simple Linked List.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
       <AdditionalOptions>
@@ -55,10 +55,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C3921EF1E93E55A00558850"
-            BuildableName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-            BlueprintName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-            ReferencedContainer = "container:&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;.xcodeproj">
+            BlueprintIdentifier = "B89D20141E94BECB002DD982"
+            BuildableName = "Simple Linked List"
+            BlueprintName = "Simple Linked List"
+            ReferencedContainer = "container:Simple Linked List.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -74,10 +74,10 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "4C3921EF1E93E55A00558850"
-            BuildableName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-            BlueprintName = "&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;"
-            ReferencedContainer = "container:&#x7ebf;&#x6027;&#x8868;&#x7684;&#x94fe;&#x5f0f;&#x5b58;&#x50a8;.xcodeproj">
+            BlueprintIdentifier = "B89D20141E94BECB002DD982"
+            BuildableName = "Simple Linked List"
+            BlueprintName = "Simple Linked List"
+            ReferencedContainer = "container:Simple Linked List.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

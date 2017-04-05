@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>线性表的链式存储.xcscheme</key>
+		<key>Simple Linked List.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -12,7 +12,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>4C3921EF1E93E55A00558850</key>
+		<key>B89D20141E94BECB002DD982</key>
 		<dict>
 			<key>primary</key>
 			<true/>
