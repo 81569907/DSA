@@ -102,6 +102,9 @@ void insertFirst(int key, int data) {
     struct node *link = (struct node*) malloc(sizeof(struct node));
     link->key = key;
     link->data = data;
+    link->next = NULL;
+    link->prev = NULL;
+    
     
     if (isEmpty()) {
         //make it the last link
@@ -220,12 +223,81 @@ struct node* delete(int key) {
     }else{
         current->prev->next = current->next;
     }
+    return current;
+}
+
+
+bool insertAfter(int key, int newKey, int data) {
+    //start from the first link
+    struct node *current = head; 
+    
+    //if list is empty
+    if(head == NULL) {
+        return false;
+    }
+    
+    //navigate through list
+    while (current->key != key) {
+        //if it is last node
+        if (current->next == NULL) {
+            return false;
+        }else{
+            //move to next link
+            current = current->next;
+        }
+    }
+    
+    //create a link
+    struct node *newLink = (struct node*) malloc(sizeof(struct node));
+    newLink->key = newKey;
+    newLink->data = data;
+    
+    if(current == last) {
+        newLink->next = NULL; 
+        last = newLink; 
+    } else {
+        newLink->next = current->next;         
+        current->next->prev = newLink;
+    }
+    
+    newLink->prev = current; 
+    current->next = newLink; 
+    return true;
+    
 }
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
         // insert code here...
-        NSLog(@"Hello, World!");
+        insertFirst(1,10);
+        insertFirst(2,20);
+        insertFirst(3,30);
+        insertFirst(4,1);
+        insertFirst(5,40);
+        insertFirst(6,56); 
+        
+        printf("\nList (First to Last): ");  
+        displayForward();
+        
+        printf("\n");
+        printf("\nList (Last to first): "); 
+        displayBackward();
+        
+        printf("\nList , after deleting first record: ");
+        deleteFirst();        
+        displayForward();
+        
+        printf("\nList , after deleting last record: ");  
+        deleteLast();
+        displayForward();
+        
+        printf("\nList , insert after key(4) : ");  
+        insertAfter(4,7, 13);
+        displayForward();
+        
+        printf("\nList  , after delete key(4) : ");  
+        delete(4);
+        displayForward();
     }
     return 0;
 }
