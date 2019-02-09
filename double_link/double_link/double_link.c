@@ -173,3 +173,43 @@ int dlink_append_last(void *pval){
     count ++;
     return 0;
 }
+
+int dlink_delete(int index){
+    node * pindex = get_node(index);
+    if (!pindex) {
+        printf("%s failed! the index in out of bound", __func__);
+        return -1;
+    }
+    pindex->next->prev = pindex->prev;
+    pindex->prev->next = pindex->next;
+    free(pindex);
+    count --;
+    return 0;
+}
+
+int dlink_delete_first(){
+    return dlink_delete(0);
+}
+
+int dlink_delete_last(){
+    return dlink_delete(count - 1);
+}
+
+int destroy_dlink(){
+    if (!phead) {
+        printf("%s failed! dlink is null!\n", __func__);
+        return -1;
+    }
+    
+    node * pnode = phead->next;
+    node * ptmp = NULL;
+    while (pnode != phead) {
+        ptmp = pnode;
+        pnode = pnode->next;
+        free(ptmp);
+    }
+    free(phead);
+    phead = NULL;
+    count = 0;
+    return 0;
+}
