@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B85F04571E9B58BA005D0B80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B85F04561E9B58BA005D0B80 /* main.m */; };
+		B88307792213FFE800E362A3 /* double_link.c in Sources */ = {isa = PBXBuildFile; fileRef = B88307782213FFE800E362A3 /* double_link.c */; };
+		B883077C2214000800E362A3 /* dlink_queue.c in Sources */ = {isa = PBXBuildFile; fileRef = B883077A2214000800E362A3 /* dlink_queue.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		B85F04531E9B58BA005D0B80 /* Queue */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = Queue; sourceTree = BUILT_PRODUCTS_DIR; };
 		B85F04561E9B58BA005D0B80 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B88307772213FFE800E362A3 /* double_link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = double_link.h; path = ../../double_link/double_link/double_link.h; sourceTree = "<group>"; };
+		B88307782213FFE800E362A3 /* double_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = double_link.c; path = ../../double_link/double_link/double_link.c; sourceTree = "<group>"; };
+		B883077A2214000800E362A3 /* dlink_queue.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dlink_queue.c; sourceTree = "<group>"; };
+		B883077B2214000800E362A3 /* dlink_queue.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dlink_queue.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +63,11 @@
 		B85F04551E9B58BA005D0B80 /* Queue */ = {
 			isa = PBXGroup;
 			children = (
+				B88307782213FFE800E362A3 /* double_link.c */,
+				B88307772213FFE800E362A3 /* double_link.h */,
 				B85F04561E9B58BA005D0B80 /* main.m */,
+				B883077A2214000800E362A3 /* dlink_queue.c */,
+				B883077B2214000800E362A3 /* dlink_queue.h */,
 			);
 			path = Queue;
 			sourceTree = "<group>";
@@ -119,6 +129,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B88307792213FFE800E362A3 /* double_link.c in Sources */,
+				B883077C2214000800E362A3 /* dlink_queue.c in Sources */,
 				B85F04571E9B58BA005D0B80 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,6 +258,7 @@
 				B85F045C1E9B58BA005D0B80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
