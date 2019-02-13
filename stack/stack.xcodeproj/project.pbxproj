@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		B85F04311E9B26AA005D0B80 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B85F04301E9B26AA005D0B80 /* main.m */; };
+		B88307732213ACD200E362A3 /* dlink_stack.c in Sources */ = {isa = PBXBuildFile; fileRef = B88307712213ACD200E362A3 /* dlink_stack.c */; };
+		B88307762213B71500E362A3 /* double_link.c in Sources */ = {isa = PBXBuildFile; fileRef = B88307742213B71500E362A3 /* double_link.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +27,10 @@
 /* Begin PBXFileReference section */
 		B85F042D1E9B26AA005D0B80 /* stack */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = stack; sourceTree = BUILT_PRODUCTS_DIR; };
 		B85F04301E9B26AA005D0B80 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B88307712213ACD200E362A3 /* dlink_stack.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = dlink_stack.c; sourceTree = "<group>"; };
+		B88307722213ACD200E362A3 /* dlink_stack.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = dlink_stack.h; sourceTree = "<group>"; };
+		B88307742213B71500E362A3 /* double_link.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = double_link.c; sourceTree = "<group>"; };
+		B88307752213B71500E362A3 /* double_link.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = double_link.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +63,11 @@
 		B85F042F1E9B26AA005D0B80 /* stack */ = {
 			isa = PBXGroup;
 			children = (
+				B88307742213B71500E362A3 /* double_link.c */,
+				B88307752213B71500E362A3 /* double_link.h */,
 				B85F04301E9B26AA005D0B80 /* main.m */,
+				B88307712213ACD200E362A3 /* dlink_stack.c */,
+				B88307722213ACD200E362A3 /* dlink_stack.h */,
 			);
 			path = stack;
 			sourceTree = "<group>";
@@ -119,7 +129,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B88307762213B71500E362A3 /* double_link.c in Sources */,
 				B85F04311E9B26AA005D0B80 /* main.m in Sources */,
+				B88307732213ACD200E362A3 /* dlink_stack.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,6 +258,7 @@
 				B85F04361E9B26AA005D0B80 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

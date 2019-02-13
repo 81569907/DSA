@@ -7,80 +7,28 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <stdio.h>
+#import "dlink_stack.h"
 
-int MAXSIZE = 8;       
-int stack[8];     
-int top = -1;    
+typedef struct tag_stu{
+    int _id;
+    char name[20];
+}stu;
 
-int isempty(){
-    if (top == -1) {
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-int isfull(){
-    if (top == MAXSIZE) {
-        return 1;
-    }else{
-        return 0;
-    }
-}
-
-int peek(){
-    return stack[top];
-}
-
-int pop(){
-    int data;
-    
-    if (!isempty()) {
-        data = stack[top];
-        top = top - 1;
-        return data;
-    }else{
-        printf("Could not retrieve data, Stack is empty.\n");
-        return 0;
-    }
-}
-
-int push(int data){
-    if (!isfull()) {
-        top = top + 1;
-        stack[top] =data;
-    }else{
-        printf("Could not insert data, Stack is full.\n");
-        return 0;
-    }
-    return 0;
-}
+static stu arr_stu[] = {
+    {10, "sky"},
+    {20, "s"},
+    {30, "b"},
+    {40, "a"},
+};
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
-        // insert code here...
-        // push items on to the stack 
-        push(3);
-        push(5);
-        push(9);
-        push(1);
-        push(12);
-        push(15);
-        
-        printf("Element at top of the stack: %d\n" ,peek());
-        printf("Elements: \n");
-        
-        // print stack data 
-        while(!isempty()) {
-            int data = pop();
-            printf("%d\n",data);
-        }
-        
-        printf("Stack full: %s\n" , isfull()?"true":"false");
-        printf("Stack empty: %s\n" , isempty()?"true":"false");
-    
 
+     stu *pval=NULL;
+        // 创建“栈”
+     create_dlink_stack();
+        
+        // 将10, 20, 30 依次推入栈中
     }
     return 0;
 }
