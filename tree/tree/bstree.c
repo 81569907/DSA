@@ -51,8 +51,8 @@ static Node* create_tree_node(TreeType key,Node *left, Node* right, Node *parent
 前序遍历
 若二叉树非空，则执行以下操作：
 (01) 访问根结点；
-(02) 先序遍历左子树；
-(03) 先序遍历右子树。
+(02) 遍历左子树；
+(03) 遍历右子树。
  */
 void preorder_tree(Tree tree){
     if (tree != NULL) {
@@ -65,9 +65,9 @@ void preorder_tree(Tree tree){
 /*
  中序遍历
  若二叉树非空，则执行以下操作：
- (01) 中序遍历左子树；
- (02) 访问根结点；
- (03) 中序遍历右子树。
+ (01) 遍历左子树；
+ (02) 根结点；
+ (03) 遍历右子树。
  */
 void midorder_tree(Tree tree){
     if (tree != NULL) {
@@ -80,9 +80,9 @@ void midorder_tree(Tree tree){
 /*
  后序遍历
  若二叉树非空，则执行以下操作：
- (01) 后序遍历左子树；
- (02) 后序遍历右子树；
- (03) 访问根结点。
+ (01) 遍历左子树；
+ (02) 遍历右子树；
+ (03) 根结点。
  */
 void postorder_tree(Tree tree){
     if (tree != NULL) {
@@ -91,12 +91,13 @@ void postorder_tree(Tree tree){
         postorder_tree(tree->right);
     }
 }
-
+/*
+(递归实现)查找"二叉树x"中键值为key的节点
+*/
 Node * tree_search(Tree x, TreeType key){
     if (x == NULL || x->key == key) {
         return x;
     }
-    
     if (key< x->key) {
         return tree_search(x->left, key);
     }else{
@@ -104,4 +105,130 @@ Node * tree_search(Tree x, TreeType key){
     }
     return NULL;
 }
+/*
+(非递归实现)查找"二叉树x"中键值为key的节点
+ */
+Node * iterative_tree_search(Tree x, TreeType key){
+    while ((x != NULL) && (x->key != key)) {
+        if (key < x->key) {
+            x = x->left;
+        }else{
+            x = x ->right;
+        }
+    }
+    return x;
+}
 
+
+/*
+查找最大结点：返回tree为根结点的二叉树的最大结点。
+*/
+
+Node * tree_maxinum(Tree tree){
+    if (tree == NULL) {
+        return NULL;
+    }
+    while (tree->right != NULL) {
+        tree = tree ->right;
+    }
+    return tree;
+}
+
+/*
+查找最小结点：返回tree为根结点的二叉树的最小结点。
+ */
+Node* tree_minimum(Tree tree)
+{
+    if (tree == NULL)
+        return NULL;
+    
+    while(tree->left != NULL)
+        tree = tree->left;
+    return tree;
+}
+
+/*
+前驱和后继
+节点的前驱：是该节点的左子树中的最大节点。
+节点的后继：是该节点的右子树中的最小节点。
+*/
+
+
+//前驱节点：二叉树中序遍历完成后和这个节点相邻的前面的节点为该节点的前驱节点
+//查找前驱节点的代码
+Node * tree_predecessor(Node * x){
+    //如果当前节点的左子树不为空，那么该点的前驱节点为该点左子树中最右的节点    
+    if (x->left != NULL) {
+        return tree_maxinum(x->left);
+    }
+    // 如果x没有左孩子。则x有以下两种可能：
+    // (01) x是"一个右孩子"，则"x的前驱结点"为 "它的父结点"。
+    // (01) x是"一个左孩子"，则查找"x的最低的父结点，并且该父结点要具有右孩子"，找到的这个"最低的父结点"就是"x的前驱结点"。
+    Node *y = x->parent;
+    while ((y != NULL) &&(x == y->left)) {
+        x = y;
+        y = y->parent;
+    }
+    return y;
+}
+
+//后继节点：二叉树中序遍历完成后和这个节点相邻的后面的节点为该节点的后继节点
+//查找后继节点
+Node* tree_successor(Node *x)
+{
+    // 如果x存在右孩子，则"x的后继结点"为 "以其右孩子为根的子树的最小结点"。
+    if (x->right != NULL)
+        return tree_minimum(x->right);
+    
+    // 如果x没有右孩子。则x有以下两种可能：
+    // (01) x是"一个左孩子"，则"x的后继结点"为 "它的父结点"。
+    // (02) x是"一个右孩子"，则查找"x的最低的父结点，并且该父结点要具有左孩子"，找到的这个"最低的父结点"就是"x的后继结点"。
+    Node* y = x->parent;
+    while ((y!=NULL) && (x==y->right))
+    {
+        x = y;
+        y = y->parent;
+    }
+    
+    return y;
+}
+
+/* 
+* 将结点插入到二叉树中
+*
+* 参数说明：
+*     tree 二叉树的根结点
+*     z 插入的结点
+* 返回值：
+*     根节点
+*/
+static Node *tree_insert(Tree tree, Node * z){
+    Node * y = NULL;
+    Node * x = tree;
+    //查找z的插入位置
+    while (x != NULL) {
+        y = x;
+        if (z->key < x->key) {
+            x = x->left;
+        }else{
+            x = x->right;
+        }
+    }
+    z->parent = y;
+    if (y == NULL) {
+        tree = z;
+    }else if(z->key < y->key){
+        y->left = z;
+    }else{
+        y->right = z;
+    }
+    return tree;
+}
+
+Node * insert_tree(Tree tree, TreeType key){
+    Node *z;//新建结点
+    if ((z = create_tree_node(key, NULL, NULL, NULL)) == NULL) {
+        return tree;
+    }
+    return tree_insert(tree, z);
+}
