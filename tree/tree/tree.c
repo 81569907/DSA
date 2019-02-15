@@ -6,19 +6,8 @@
 //  Copyright © 2019年 sunEEE. All rights reserved.
 //
 
-#include "bstree.h"
+#include "tree.h"
 #include <stdlib.h>
-//节点定义
-
-typedef int  TreeType;
-
-typedef struct TreeNode{
-    TreeType key;//// 关键字(键值)
-    struct TreeNode * left;// 左孩子
-    struct TreeNode * right;// 右孩子
-    struct TreeNode * parent;// 父结点
-}Node,*Tree;
-
 
 /*
 二叉查找树的节点包含的基本信息：
@@ -225,6 +214,16 @@ static Node *tree_insert(Tree tree, Node * z){
     return tree;
 }
 
+ /* 
+ * 新建结点(key)，并将其插入到二叉树中
+ *
+  * 参数说明：
+ *     tree 二叉树的根结点
+  *     key 插入结点的键值
+ * 返回值：
+ *     根节点
+  */
+
 Node * insert_tree(Tree tree, TreeType key){
     Node *z;//新建结点
     if ((z = create_tree_node(key, NULL, NULL, NULL)) == NULL) {
@@ -232,3 +231,106 @@ Node * insert_tree(Tree tree, TreeType key){
     }
     return tree_insert(tree, z);
 }
+
+
+/* 
+ * 删除结点(z)，并返回根节点
+ *
+ * 参数说明：
+ *     tree 二叉树的根结点
+ *     z 删除的结点
+ * 返回值：
+ *     根节点
+ */
+static Node* tree_delete(Tree tree, Node *z)
+{
+    Node *x=NULL;
+    Node *y=NULL;
+    
+    if ((z->left == NULL) || (z->right == NULL) )
+        y = z;
+    else
+        y = tree_successor(z);
+    
+    if (y->left != NULL)
+        x = y->left;
+    else
+        x = y->right;
+    
+    if (x != NULL)
+        x->parent = y->parent;
+    
+    if (y->parent == NULL)
+        tree = x;
+    else if (y == y->parent->left)
+        y->parent->left = x;
+    else
+        y->parent->right = x;
+    
+    if (y != z) 
+        z->key = y->key;
+    
+    if (y!=NULL)
+        free(y);
+    
+    return tree;
+}
+
+/* 
+ * 删除结点(key为节点的键值)，并返回根节点
+ *
+ * 参数说明：
+ *     tree 二叉树的根结点
+ *     z 删除的结点
+ * 返回值：
+ *     根节点
+ */
+Node* delete_bstree(Tree tree, TreeType key)
+{
+    Node *z, *node; 
+    
+    if ((z = tree_search(tree, key)) != NULL)
+        tree =tree_delete(tree, z);
+    
+    return tree;
+}
+
+/*
+ * 销毁二叉树
+ */
+void destroy_bstree(Tree tree)
+{
+    if (tree==NULL)
+        return ;
+    
+    if (tree->left != NULL)
+        destroy_bstree(tree->left);
+    if (tree->right != NULL)
+        destroy_bstree(tree->right);
+    
+    free(tree);
+}
+
+/*
+ * 打印"二叉树"
+ *
+ * tree       -- 二叉树的节点
+ * key        -- 节点的键值 
+ * direction  --  0，表示该节点是根节点;
+ *               -1，表示该节点是它的父结点的左孩子;
+ *                1，表示该节点是它的父结点的右孩子。
+ */
+void print_tree(Tree tree, TreeType key, int direction)
+{
+    if(tree != NULL)
+    {
+        if(direction==0)    // tree是根节点
+            printf("%2d is root\n", tree->key);
+        else                // tree是分支节点
+            printf("%2d is %2d's %6s child\n", tree->key, key, direction==1?"right" : "left");
+        
+        print_tree(tree->left, tree->key, -1);
+        print_tree(tree->right,tree->key,  1);
+    }
+}
+

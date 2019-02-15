@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B8B4843822151BDE00F287DA /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = B8B4843722151BDE00F287DA /* main.c */; };
-		B8B4844022151BE900F287DA /* bstree.c in Sources */ = {isa = PBXBuildFile; fileRef = B8B4843E22151BE900F287DA /* bstree.c */; };
+		B8B4844022151BE900F287DA /* tree.c in Sources */ = {isa = PBXBuildFile; fileRef = B8B4843E22151BE900F287DA /* tree.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,8 +26,8 @@
 /* Begin PBXFileReference section */
 		B8B4843422151BDE00F287DA /* tree */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = tree; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8B4843722151BDE00F287DA /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
-		B8B4843E22151BE900F287DA /* bstree.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = bstree.c; sourceTree = "<group>"; };
-		B8B4843F22151BE900F287DA /* bstree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = bstree.h; sourceTree = "<group>"; };
+		B8B4843E22151BE900F287DA /* tree.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = tree.c; sourceTree = "<group>"; };
+		B8B4843F22151BE900F287DA /* tree.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = tree.h; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,8 +61,8 @@
 			isa = PBXGroup;
 			children = (
 				B8B4843722151BDE00F287DA /* main.c */,
-				B8B4843E22151BE900F287DA /* bstree.c */,
-				B8B4843F22151BE900F287DA /* bstree.h */,
+				B8B4843E22151BE900F287DA /* tree.c */,
+				B8B4843F22151BE900F287DA /* tree.h */,
 			);
 			path = tree;
 			sourceTree = "<group>";
@@ -123,7 +123,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B8B4844022151BE900F287DA /* bstree.c in Sources */,
+				B8B4844022151BE900F287DA /* tree.c in Sources */,
 				B8B4843822151BDE00F287DA /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
