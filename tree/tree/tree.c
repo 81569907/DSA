@@ -191,35 +191,14 @@ Node* tree_successor(Node *x)
 * 返回值：
 *     根节点
 */
-static void tree_insert(Tree tree, Node * z){
-    if (tree == NULL) {
-        tree = z;
-    }else if(z->key < tree->key){
-        tree_insert(tree->left, z);
-    }else if (z->key > tree->key){
-        tree_insert(tree->right, z);
+static void tree_insert(Tree *tree, Node * z){
+    if (*tree == NULL) {
+        *tree = z;
+    }else if(z->key < (*tree)->key){
+        tree_insert(&(*tree)->left, z);
+    }else if (z->key > (*tree)->key){
+        tree_insert(&(*tree)->right, z);
     }
-    return;
-    Node * y = NULL;
-    Node * x = tree;
-    //查找z的插入位置
-    while (x != NULL) {
-        y = x;
-        if (z->key < x->key) {
-            x = x->left;
-        }else{
-            x = x->right;
-        }
-    }
-    z->parent = y;
-    if (y == NULL) {
-        tree = z;
-    }else if(z->key < y->key){
-        y->left = z;
-    }else{
-        y->right = z;
-    }
-    return;
 }
 
  /* 
@@ -237,7 +216,7 @@ void insert_tree(Tree *tree, TreeType key){
     if ((z = create_tree_node(key, NULL, NULL, NULL)) == NULL) {
         return;
     }
-    tree_insert(&tree, z);
+    tree_insert(tree, z);
 }
 
 
