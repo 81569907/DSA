@@ -24,7 +24,7 @@ typedef struct TreeNode{
 // 前序遍历"二叉树"
 void preorder_tree(Tree tree);
 // 中序遍历"二叉树"
-void inorder_tree(Tree tree);
+void midorder_tree(Tree tree);
 // 后序遍历"二叉树"
 void postorder_tree(Tree tree);
 
@@ -44,7 +44,7 @@ Node* tree_successor(Node *x);
 Node* tree_predecessor(Node *x);
 
 // 将结点插入到二叉树中，并返回根节点
-Node* insert_tree(Tree tree, TreeType key);
+void insert_tree(Tree *tree, TreeType key);
 
 // 删除结点(key为节点的值)，并返回根节点
 Node* delete_tree(Tree tree, TreeType key);

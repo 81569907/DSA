@@ -60,8 +60,8 @@ void preorder_tree(Tree tree){
  */
 void midorder_tree(Tree tree){
     if (tree != NULL) {
-        printf("%d ", tree->key);
         midorder_tree(tree->left);
+        printf("%d ", tree->key);
         midorder_tree(tree->right);
     }
 }
@@ -75,9 +75,9 @@ void midorder_tree(Tree tree){
  */
 void postorder_tree(Tree tree){
     if (tree != NULL) {
-        printf("%d ", tree->key);
         postorder_tree(tree->left);
         postorder_tree(tree->right);
+        printf("%d ", tree->key);
     }
 }
 /*
@@ -191,7 +191,15 @@ Node* tree_successor(Node *x)
 * 返回值：
 *     根节点
 */
-static Node *tree_insert(Tree tree, Node * z){
+static void tree_insert(Tree tree, Node * z){
+    if (tree == NULL) {
+        tree = z;
+    }else if(z->key < tree->key){
+        tree_insert(tree->left, z);
+    }else if (z->key > tree->key){
+        tree_insert(tree->right, z);
+    }
+    return;
     Node * y = NULL;
     Node * x = tree;
     //查找z的插入位置
@@ -211,7 +219,7 @@ static Node *tree_insert(Tree tree, Node * z){
     }else{
         y->right = z;
     }
-    return tree;
+    return;
 }
 
  /* 
@@ -224,12 +232,12 @@ static Node *tree_insert(Tree tree, Node * z){
  *     根节点
   */
 
-Node * insert_tree(Tree tree, TreeType key){
+void insert_tree(Tree *tree, TreeType key){
     Node *z;//新建结点
     if ((z = create_tree_node(key, NULL, NULL, NULL)) == NULL) {
-        return tree;
+        return;
     }
-    return tree_insert(tree, z);
+    tree_insert(&tree, z);
 }
 
 
