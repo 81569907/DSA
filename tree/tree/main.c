@@ -9,7 +9,7 @@
 #include <stdio.h>
 #include "tree.h"
 
-static int arr[]= {4,8,9,1,2,10,12,5};
+static int arr[]= {50, 30, 80, 20, 35, 34, 32, 40, 70, 75, 100};
 #define TBL_SIZE(a) ( (sizeof(a)) / (sizeof(a[0])) )
 
 
@@ -35,7 +35,9 @@ int main(int argc, const char * argv[]) {
     postorder_tree(root);
 //    printf("\n");
 //    
-//    printf("== 最小值: %d\n", tree_minimum(root)->key);
+    printf("== 最小值: %d\n", tree_minimum(root)->key);
+    tree_predecessor(tree_minimum(root)->right->left);
+
 //    printf("== 最大值: %d\n", tree_maximum(root)->key);
 //    printf("== 树的详细信息: \n");
 //    print_bstree(root, root->key, 0);
