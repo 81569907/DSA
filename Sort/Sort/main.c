@@ -35,6 +35,28 @@ void select_sort(int *arr){
     }
 }
 
+/**
+ 插入排序
+直接插入排序就是从待排序列中选出一个元素，插入到已经有序的元素之中，直到所有的元素都插入到有序序列中所有的元素就全部 有序了。
+ 
+通常的做法就是将第一个元素看做是有序的元素（即待排序列的第一个元素看做是有序序列），然后我们将第二个元素和有序序列（即
+ 9 第一个元素）作比较，按正确的序列插入到序列中去。然后在将第三个元素和前面有序序列（即整个待排序列的前两个元素）作比较，将第
+ 10 三个插入到前两个元素中去，使得前三个元素有序。以此类推，直到所有的元素都有序。 
+ 
+ @param arr <#arr description#>
+ */
+void insert_sort(int * arr){
+    for (int i = 1; i < num; i++) {
+        for (int j = 0; j < i; j++) {
+            if (arr[j] > arr[i]) {
+                int value = arr[i];
+                arr[i] = arr[j];
+                arr[j] = value;
+            }
+        }
+    }
+}
+
 
 int main(int argc, const char * argv[]) {
     // insert code here...
@@ -43,6 +65,11 @@ int main(int argc, const char * argv[]) {
     select_sort(a);
     for (int i = 0; i < num; i ++) {
         printf("%d ", a[i]);
+    }
+    int b[num] = {20, 1, 7, 5};
+    insert_sort(b);
+    for (int i = 0; i < num; i ++) {
+        printf("%d ", b[i]);
     }
     return 0;
 }
