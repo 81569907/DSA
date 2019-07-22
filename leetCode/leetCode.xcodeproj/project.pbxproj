@@ -7,7 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B8903F7D22B2699E00CA0104 /* ListNode.m in Sources */ = {isa = PBXBuildFile; fileRef = B8903F7C22B2699E00CA0104 /* ListNode.m */; };
 		B8C4906222B0FE7900236FA3 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C4906122B0FE7900236FA3 /* main.m */; };
+		B8C4906A22B1043A00236FA3 /* LeetCode.m in Sources */ = {isa = PBXBuildFile; fileRef = B8C4906922B1043A00236FA3 /* LeetCode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -23,8 +25,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		B8903F7B22B2699E00CA0104 /* ListNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ListNode.h; sourceTree = "<group>"; };
+		B8903F7C22B2699E00CA0104 /* ListNode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ListNode.m; sourceTree = "<group>"; };
 		B8C4905E22B0FE7900236FA3 /* LeetCode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = LeetCode; sourceTree = BUILT_PRODUCTS_DIR; };
 		B8C4906122B0FE7900236FA3 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		B8C4906822B1043A00236FA3 /* LeetCode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LeetCode.h; sourceTree = "<group>"; };
+		B8C4906922B1043A00236FA3 /* LeetCode.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = LeetCode.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +64,10 @@
 			isa = PBXGroup;
 			children = (
 				B8C4906122B0FE7900236FA3 /* main.m */,
+				B8C4906822B1043A00236FA3 /* LeetCode.h */,
+				B8C4906922B1043A00236FA3 /* LeetCode.m */,
+				B8903F7B22B2699E00CA0104 /* ListNode.h */,
+				B8903F7C22B2699E00CA0104 /* ListNode.m */,
 			);
 			path = LeetCode;
 			sourceTree = "<group>";
@@ -118,6 +128,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B8C4906A22B1043A00236FA3 /* LeetCode.m in Sources */,
+				B8903F7D22B2699E00CA0104 /* ListNode.m in Sources */,
 				B8C4906222B0FE7900236FA3 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
