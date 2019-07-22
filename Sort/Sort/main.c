@@ -7,8 +7,7 @@
 //
 
 #include <stdio.h>
-
-
+#include <stdlib.h>
 /**
  直接插入排序的核心思想就是：将数组中的所有元素依次跟前面已经排好的元素相比较，如果选择的元素比已排序的元素小，则交换，直到全部元素都比较过。
  因此，从上面的描述中我们可以发现，直接插入排序可以用两个循环完成：
@@ -149,6 +148,50 @@ void quick_sort(int s[], int l, int r)
     }
 }
 
+int min(int x, int y) {
+    return x < y ? x : y;
+}
+
+/**
+ 1.申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列；
+ 2.设定两个指针，最初位置分别为两个已经排序序列的起始位置；
+ 3.比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置；
+ 4.重复步骤 3 直到某一指针达到序列尾；
+ 5.将另一序列剩下的所有元素直接复制到合并序列尾。
+
+ @param a <#a description#>
+ @param len <#len description#>
+ */
+void merge_sort(int arr[], int len) {
+    int *a = arr;
+    int *b = (int *) malloc(len * sizeof(int));
+    int seg, start;
+    for (seg = 1; seg < len; seg += seg) {
+        for (start = 0; start < len; start += seg * 2) {
+            int low = start, mid = min(start + seg, len), high = min(start + seg * 2, len);
+            int k = low;
+            int start1 = low, end1 = mid;
+            int start2 = mid, end2 = high;
+            while (start1 < end1 && start2 < end2)
+                b[k++] = a[start1] < a[start2] ? a[start1++] : a[start2++];
+            while (start1 < end1)
+                b[k++] = a[start1++];
+            while (start2 < end2)
+                b[k++] = a[start2++];
+        }
+        int *temp = a;
+        a = b;
+        b = temp;
+    }
+    if (a != arr) {
+        int i;
+        for (i = 0; i < len; i++)
+            b[i] = a[i];
+        b = a;
+    }
+    free(b);
+}
+
 
 void printArr(int a[],int n){
     for (int i = 0; i < n; i++) {
@@ -163,7 +206,8 @@ int main(int argc, const char * argv[]) {
 //    insert_sort(a, 5);
 //    insert_shell(a, 6);
 //    select_sort(a, 6);
-    quick_sort(a, 0, 5);
+//    quick_sort(a, 0, 5);
+    merge_sort(a, 6);
     printArr(a, 6);
     return 0;
 }
