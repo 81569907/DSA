@@ -8,6 +8,15 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+
+
+void printArr(int a[],int n){
+    for (int i = 0; i < n; i++) {
+        printf("%d ", a[i]);
+    }
+}
+
+
 /**
  直接插入排序的核心思想就是：将数组中的所有元素依次跟前面已经排好的元素相比较，如果选择的元素比已排序的元素小，则交换，直到全部元素都比较过。
  因此，从上面的描述中我们可以发现，直接插入排序可以用两个循环完成：
@@ -152,62 +161,187 @@ int min(int x, int y) {
     return x < y ? x : y;
 }
 
+
 /**
- 1.申请空间，使其大小为两个已经排序序列之和，该空间用来存放合并后的序列；
- 2.设定两个指针，最初位置分别为两个已经排序序列的起始位置；
- 3.比较两个指针所指向的元素，选择相对小的元素放入到合并空间，并移动指针到下一位置；
- 4.重复步骤 3 直到某一指针达到序列尾；
- 5.将另一序列剩下的所有元素直接复制到合并序列尾。
+ 归并排序
+ 从下到上，每一步都需要将两个已经有序的子数组合并成一个大的有序数组
+
+ */
+void merge(int arr[], int L, int mid, int R){
+    int temp[R - L +1];//开辟一个新的数组，将原数组映射进去
+    int i= 0;
+    int p1 = L;
+    int p2 = mid +1;
+    
+    //比较左右两部分的元素，哪个小，把那个元素填入temp中
+    while (p1 <= mid && p2 <= R) {
+        temp[i ++] = arr[p1]< arr[p2] ?arr[p1 ++] : arr[p2 ++];
+    }
+    // 上面的循环退出后，把剩余的元素依次填入到temp中
+    // 以下两个while只有一个会执行
+    while (p1 <= mid) {
+        temp[i++] = arr[p1 ++];
+    }
+    
+    while (p2 <= R) {
+        temp[i++] = arr[p2++];
+    }
+    
+    // 把最终的排序的结果复制给原数组
+    for (i = 0; i < R - L + 1; i++) {
+        arr[L +i] = temp[i];
+    }
+}
+
+void sort(int arr[], int L, int R){
+    
+    if (L == R) {
+        return;
+    }
+    int mid = L + (R -  L)/2;
+    sort(arr, L, mid);
+    sort(arr, mid + 1, R);
+    merge(arr, L, mid, R);
+}
+
+
+void mergeSort(int arr[], int len){
+    int L = 0;
+    int R = len - 1;
+    sort(arr, L, R);
+}
+
+/**
+ 求数组中元素最大数
+ 
+ @param a a description
+ @param len <#len description#>
+ @return <#return value description#>
+ */
+int maxBit(int a[], int len){
+    int max = a[0];
+    for (int  i = 1; i < len; i++) {
+        if (a[i] > max) {
+            max = a[i];
+        }
+    }
+    
+    //数组中最大元素位数
+    int bits_num = 1;
+    while (max >= 10) {
+        bits_num ++;
+        max/=10;
+    }
+    return bits_num;
+}
+
+
+/**
+取数xxx上的第bit位数字
+ @param num <#num description#>
+ @param bit <#bit description#>
+ @return <#return value description#>
+ */
+int digit(int num, int bit){
+    int pow = 1;
+    while (--bit >  0) {
+        pow *= 10;
+    }
+    return num/pow%10;
+}
+
+
+/**
+ 基数排序
 
  @param a <#a description#>
  @param len <#len description#>
  */
-void merge_sort(int arr[], int len) {
-    int *a = arr;
-    int *b = (int *) malloc(len * sizeof(int));
-    int seg, start;
-    for (seg = 1; seg < len; seg += seg) {
-        for (start = 0; start < len; start += seg * 2) {
-            int low = start, mid = min(start + seg, len), high = min(start + seg * 2, len);
-            int k = low;
-            int start1 = low, end1 = mid;
-            int start2 = mid, end2 = high;
-            while (start1 < end1 && start2 < end2)
-                b[k++] = a[start1] < a[start2] ? a[start1++] : a[start2++];
-            while (start1 < end1)
-                b[k++] = a[start1++];
-            while (start2 < end2)
-                b[k++] = a[start2++];
+void radixSort(int a[], int len){
+    int d = maxBit(a, len);
+    int b[10][len + 1];
+    for(int i=0;i<10;i++){
+        for(int j=0;j<len+1;j++){
+            b[i][j]=0;
         }
-        int *temp = a;
-        a = b;
-        b = temp;
     }
-    if (a != arr) {
-        int i;
-        for (i = 0; i < len; i++)
-            b[i] = a[i];
-        b = a;
+
+    for (int i = 1; i <= d; i++) {
+        //把数组a的第i位元素装到对应桶里
+        for (int j = 0; j < len; j ++) {
+            b[digit(a[j], i)][0]++;
+            b[digit(a[j], i)][b[digit(a[j], i)][0]] = a[i];
+        }
+        
+        //把所有桶倒出来
+        for (int i = 0, j = 0; j < 10; j++) {
+            //倒桶
+            for (int k = 1; b[j][0] > 0 && k <= b[j][0]; k ++) {
+                a[i ++] = b[j][k];
+            }
+            b[j][0] = 0;
+        }
     }
-    free(b);
 }
 
 
-void printArr(int a[],int n){
-    for (int i = 0; i < n; i++) {
-        printf("%d ", a[i]);
+/**
+ 计数排序(桶排序思想)
+ 根据待排序集合中最大元素和最小元素的差值范围，申请额外空间；
+ 遍历待排序集合，将每一个元素出现的次数记录到元素值对应的额外空间内；
+ 对额外空间内数据进行计算，得出每一个元素的正确位置；
+ 将待排序集合每一个元素移动到计算得出的正确位置上。
+
+ @param a <#a description#>
+ @param len <#len description#>
+ */
+void countingSort(int a[], int len){
+    //找数组中的最大值和最小值，确定桶的个数
+    int max = a[0];
+    int min = a[0];
+    
+    for (int i = 0; i < len; i ++) {
+        if (a[i] > max) {
+            max = a[i];
+        }
+        if (a[i] < min) {
+            min = a[i];
+        }
+    }
+        
+    //定义桶数组B并初始化
+    int num = max - min + 1;
+    int b[num];
+    for (int i = 0; i < num; i ++) {
+        b[i] = 0;
+    }
+    
+    //把数组A的元素装到对应桶里
+    for(int i = 0; i < len; i ++){
+        int index = a[i] - min;
+        b[index] ++;
+    }
+    //把所有桶倒出来
+    for (int i = 0, j = 0; j < num; j++) {
+        //倒桶j
+        for (int k = b[j]; k > 0; k --) {
+            a[i++] = j + min;
+        }
     }
 }
+
+
+
 
 
 int main(int argc, const char * argv[]) {
     // insert code here...
-    int a[]={2,10,3,1,19,4};
+    int a[]={6,2,3,1,19,4};
 //    insert_sort(a, 5);
 //    insert_shell(a, 6);
 //    select_sort(a, 6);
 //    quick_sort(a, 0, 5);
-    merge_sort(a, 6);
+    radixSort(a, 6);
     printArr(a, 6);
     return 0;
 }
